@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from blog.models import Article
 from datetime import datetime
 from django.http import Http404
+
+def page_not_found(request):
+    return render_to_response('404test.html')
 
 def home(request):
     post_list = Article.objects.all()  # 获取全部的Article对象
