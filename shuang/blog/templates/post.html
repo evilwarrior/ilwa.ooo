@@ -1,21 +1,24 @@
 {% extends "base.html" %}
  
 {% block content %}
-<div class="posts">
-        <section class="post">
-            <header class="post-header">
-                <h2 class="post-title">{{ post.title }}</h2>
-                <p class="post-meta">
-		    <span class="post-avatar">Time:  <a class="" href="#">{{ post.pub_date |date:'Y-m-d'}}</a></span>
-		    <a class="post-category post-category-pure" href="#">{{ post.category }}</a>
-                </p>
-            </header>
- 
-            <div class="post-description">
-                <p>
-                    {{ post.content|safe }}
-                </p>
-            </div>
-        </section>
-</div><!-- /.blog-post -->
+<article class="post">
+    <h4 class="post-cat">
+	<a href="{% url 'search_cat' cat=post.category %}">{{ post.category }}</a>
+    </h4>
+    <h1 class="post-title">{{ post.title }}</h1>
+    <ul class="post-date">
+        <li>
+            {{ post.pub_date |date:'M. d D, Y'}}
+        </li>
+        <li>
+            {{ post.authors }}
+        </li>
+    </ul>
+
+    <div class="post-content">
+        <p>
+            {{ post.content|safe }}
+        </p>
+    </div>
+</article><!-- /.blog-post -->
 {% endblock %}

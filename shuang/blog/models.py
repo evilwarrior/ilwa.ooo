@@ -4,10 +4,14 @@ from django.db import models
 from DjangoUeditor.models import UEditorField
 
 class Article(models.Model):
-    #博客标题
+    # 博客标题
     title = models.CharField(u"博客标题", max_length=100)
+    # 博客作者
+    authors = models.CharField(u"博客作者（留空默认为添加者名称）", max_length=50, blank=True)
+    # 博客分类
+    category = models.CharField(u"博客分类（默认值为日记）", max_length=50, blank=True, default='日记')
     # 博客标签
-    category = models.CharField(u"博客标签", max_length=50, blank=True)
+    tags = models.CharField(u"博客标签（逗号分隔）", max_length=200, blank=True)
     # 博客发布日期
     pub_date = models.DateTimeField(u"发布日期", auto_now_add=True, editable=True)
     update_time = models.DateTimeField(u'更新时间', auto_now=True, null=True)
