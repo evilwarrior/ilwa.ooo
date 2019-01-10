@@ -21,4 +21,27 @@
         </p>
     </div>
 </article><!-- /.blog-post -->
+
+<article class="post">
+    <h4 class="post-title">Guys Comments</h4>
+    {% for crit in post_crit %}
+        <ul class="post-date">
+            <li><a href="#">
+                <img src="{{ crit.portrait.url }}" />
+            </a></li>
+            <li>
+                {{ crit.pub_date |date:'M. d D, Y'}}
+            </li>
+            <li>
+                {{ crit.critic }}
+            </li>
+        </ul>
+
+        <div class="post-content">
+            <p>
+                {{ crit.content|safe }}
+            </p>
+        </div>
+    {% endfor %}
+</article><!-- /.blog-post -->
 {% endblock %}

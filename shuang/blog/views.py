@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from blog.models import Article
+from blog.models import Criticism
 from datetime import datetime
 from django.http import Http404
 
@@ -13,9 +14,10 @@ def home(request):
 def Detail(request, id):
     try:
         post = Article.objects.get(id=str(id))
+        post_crit = Criticism.objects.filter(article_id__exact=str(id))
     except Article.DoesNotExist:
         raise Http404
-    return render(request, 'post.html', {'post': post})
+    return render(request, 'post.html', {'post': post, 'post_crit': post_crit})
 
 def search_cat(request, cat): #cat(category)在URL中获取
     try:

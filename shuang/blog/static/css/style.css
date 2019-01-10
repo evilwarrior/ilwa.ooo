@@ -1,18 +1,18 @@
 @font-face {
   font-family: Lora;
-  src: url("../font/Lora-Regular.ttf"), url("../font/Lora-Regular.eot");
+  src: url("../fonts/Lora-Regular.ttf"), url("../fonts/Lora-Regular.eot");
 }
 @font-face {
   font-family: Lora-Bold;
-  src: url("../font/Lora-Bold.ttf"), url("../font/Lora-Bold.eot");
+  src: url("../fonts/Lora-Bold.ttf"), url("../fonts/Lora-Bold.eot");
 }
 @font-face {
   font-family: Lato;
-  src: url("../font/Lato-Regular.ttf"), url("../font/Lato-Regular.eot");
+  src: url("../fonts/Lato-Regular.ttf"), url("../fonts/Lato-Regular.eot");
 }
 @font-face {
   font-family: Lato-Bold;
-  src: url("../font/Lato-Bold.ttf"), url("../font/Lato-Bold.eot");
+  src: url("../fonts/Lato-Bold.ttf"), url("../fonts/Lato-Bold.eot");
 }
 pre {
   border: 1px dashed #ddd;
@@ -67,7 +67,7 @@ code {
   margin: 0 0.75em;
 }
 .header .links ul li:last-child::after {
-  content: '';
+  content: '\00A0';
 }
 .header .links ul li a {
   color: #777;
