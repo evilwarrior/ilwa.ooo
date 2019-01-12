@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.html import format_html
 from django.conf import settings
-from django.core.files import File
+from django.core.validators import MinLengthValidator
 from DjangoUeditor.models import UEditorField
-# python内建模块
+# python其他模块
 import os
 import uuid
 from datetime import datetime as datime
@@ -44,10 +44,11 @@ def portrait_path(instance, filename):
 
 # 博客评论类
 class Criticism(models.Model):
-    article = models.ForeignKey(Article, verbose_name="关联文章", on_delete=models.CASCADE)
-    critic = models.CharField("署名", max_length=50, blank=True)
-    portrait = models.ImageField("头像", upload_to=portrait_path, blank=True, null=True)
-    content = models.TextField("评语", max_length=600, blank=True)
+    validate_content = MinLengthValidator(5)
+    article = models.ForeignKey(Article, verbose_name="关联文章", on_delete=models.CASCADE, default=1)
+    critic = models.CharField("署名", max_length=50)
+    portrait = models.ImageField("头像", upload_to=portrait_path, blank=True)
+    content = models.TextField("评语", max_length=600, validators=[validate_content])
     pub_date = models.DateTimeField("发布日期", auto_now_add=True, editable=True)
 
     # 头像字段使用图片代替路径显示

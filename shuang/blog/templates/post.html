@@ -8,10 +8,10 @@
     <h1 class="post-title">{{ post.title }}</h1>
     <ul class="post-date">
         <li>
-            {{ post.pub_date |date:'M. d D, Y'}}
+            {{ post.authors }}
         </li>
         <li>
-            {{ post.authors }}
+            {{ post.pub_date |date:'M. d D, Y'}}
         </li>
     </ul>
 
@@ -22,26 +22,69 @@
     </div>
 </article><!-- /.blog-post -->
 
-<article class="post">
-    <h4 class="post-title">Guys Comments</h4>
-    {% for crit in post_crit %}
-        <ul class="post-date">
-            <li><a href="#">
-                <img src="{{ crit.portrait.url }}" />
-            </a></li>
-            <li>
-                {{ crit.pub_date |date:'M. d D, Y'}}
-            </li>
-            <li>
-                {{ crit.critic }}
-            </li>
-        </ul>
+<article class="comm">
+    <h4 class="comm-title">🍊🍊do not trust orang!🍊🍊</h4>
+      {% for crit in post_crit %}
+        <div class="comm-crit">
+            <ul class="comm-date">
+                <li>
+                    {{ crit.critic }}
+                </li>
+                <li>
+                    {{ crit.pub_date |date:'m. d, Y'}}
+                </li>
+            </ul>
+	    <div class="comm-portr">{% if crit.portrait %}<img src="{{ crit.portrait.url }}" />{% endif %}</div>
 
-        <div class="post-content">
-            <p>
-                {{ crit.content|safe }}
-            </p>
+
+            <div class="comm-content">
+                <p>
+                    {{ crit.content|safe }}
+                </p>
+            </div>
+        <div style="clear:both"></div>
         </div>
-    {% endfor %}
-</article><!-- /.blog-post -->
+      {% endfor %}
+</article><!-- /.blog-comment -->
+
+<article class="commf">
+    <h4 class="commf-title">hehe henlo friend</h4>
+    <form action="" method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {{ form.article }}
+        <div class="commf-portr">
+            <img id="avartar" src="/media/portraits/default.png" alt="profile" title="点击上传头像">
+            <div class="commf-portr-ava">{{ form.portrait.label }}</div>
+            {{ form.portrait }}
+        </div>
+
+        <div class="commf-pseu">
+            <p class="commf-pseu-onym">{{ form.critic.label }}</p>
+            {{ form.critic }}
+            {% if error.critic %}{{ error.critic }}{% endif %}
+        </div>
+        <div style="clear:both"></div>
+
+        <div class="commf-ctent">
+            <p class="commf-ctent-comm">{{ form.content.label }}</p>
+            {{ form.content }}
+            {% if error.content %}{{ error.content }}{% endif %}
+        </div>
+
+        <div class="commf-comm">
+            <input type="submit" value="comment" class="commf-comm-submit">
+        </div>
+    </form>
+
+    <script>
+        $(':file').change(function () {
+            var file_obj = $(this)[0].files[0];
+            var file_Read = new FileReader();
+            file_Read.readAsDataURL(file_obj);
+            file_Read.onload=function (){
+                    $("#avartar").attr('src',this.result)
+            }
+        });
+    </script>
+</article><!-- /.blog-comment-form -->
 {% endblock %}

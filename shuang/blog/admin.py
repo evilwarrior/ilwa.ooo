@@ -1,10 +1,11 @@
 #coding:utf8
 from django.contrib import admin
 from django.conf import settings
+# 我的模型类
 from blog.models import Article
 from blog.models import Criticism
 
-# python内建模块
+# python其他模块
 import os
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -37,9 +38,9 @@ class CriticismAdmin(admin.ModelAdmin):
             obj.save()
 
             # 我尝试多次失败最后下面成功的代码，效果等同于上面的代码，
-            # 通过这个保存头像然后删除并重命名知晓了fileds.FileFields
+            # 通过这个保存头像然后删除并重命名知晓了models.FileField
             # 对应的save会递交upload_to参数，所以解决方法就只是重命名
-            # 并使用fileds.save()方法既可
+            # 并使用models.YourModel.save()方法既可
             #with open(os.path.join(settings.MEDIA_ROOT, "portraits", "default.png"), 'rb') as f:
             #    obj.portrait.save("default.png", f, save=False)
             #obj.portrait.delete(save=False)
