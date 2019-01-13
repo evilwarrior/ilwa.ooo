@@ -30,11 +30,11 @@ class CriticismForm(ModelForm):
         }
         error_messages = {
             'critic': {
-                'max_length': _("别名请控制在50字以内qqqxx。"),
+                'max_length': _("俺寻思你名字也不会比Uvuvwevwevwe Onyetenyevwe Ugwemubwem Ossas长吧，别名不能过50字qqqxx。"),
                 'required': _("行，但是可以起个别名先么。"),
             },
             'content': {
-                'max_length': _("评论请控制在600字以内qqqxx。"),
+                'max_length': _("哇浪！这么能评！可惜本博还不能评过600字。"),
                 'required': _("填点什么吧，，，"),
                 'min_length': _('评语不要小于5字qqqxx。'),
             },

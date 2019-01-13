@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import Http404
 from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 # 我的模型类
 from blog.models import Article
 from blog.models import Criticism
@@ -40,6 +42,8 @@ def Detail(request, id):
                     new_path = os.path.join(settings.MEDIA_ROOT, crit.portrait.name)
                     os.rename(crit.portrait.path, new_path)
                     crit.save()
+                # 提交表单成功后重定向，防止用户刷新页面重交表单
+                return HttpResponseRedirect(reverse('blog_detail', args=(id)))
             else:
                 error = form.errors
                 return render(request, 'post.html', {'post': post, 'post_crit': post_crit, 'form': form, 'error': error})
