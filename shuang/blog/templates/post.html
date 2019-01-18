@@ -75,7 +75,10 @@
             <input type="submit" value="comment" class="commf-comm-submit">
         </div>
     </form>
+</article><!-- /.blog-comment-form -->
+{% endblock %}
 
+{% block js %}
     <script>
         $(':file').change(function () {
             var file_obj = $(this)[0].files[0];
@@ -86,5 +89,4 @@
             }
         });
     </script>
-</article><!-- /.blog-comment-form -->
 {% endblock %}

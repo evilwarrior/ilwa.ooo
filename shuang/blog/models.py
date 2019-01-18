@@ -14,11 +14,17 @@ from datetime import datetime as datime
 class Article(models.Model):
     title = models.CharField("标题", max_length=100)
     authors = models.CharField("作者（留空默认为添加者名称）", max_length=50, blank=True)
+    user = models.CharField(max_length=50, blank=True)
     category = models.CharField("分类（默认值为日记）", max_length=50, blank=True, default='日记')
     tags = models.CharField("标签（逗号分隔）", max_length=200, blank=True)
     pub_date = models.DateTimeField("发布日期", auto_now_add=True, editable=True)
     update_time = models.DateTimeField('更新时间', auto_now=True, null=True)
     content = UEditorField(width=600, height=300, toolbars="besttome", imagePath="images/", filePath="files/", upload_settings={"imageMaxSize":1204000}, settings={}, verbose_name='')
+
+    # 显示真正添加文章的用户
+    def user_now(self):
+        return str(self.user)
+    user_now.short_description = '所属用户'
 
     # 作为外键时显示id 标题 作者
     def __str__(self):

@@ -383,9 +383,16 @@ code {
   margin-bottom: 1.5em;
   text-align: left;
 }
+.post .post-content a {
+  color: #f78769;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.post .post-content a:hover {
+  color: #777;
+}
 .post .post-content a.more-link {
   box-shadow: inset 0 -80px 80px -5px rgba(255,255,255,0.75);
-  color: #f78769;
   font-family: Lora-Bold;
   font-weight: 700;
   display: block;
@@ -394,7 +401,6 @@ code {
   bottom: -32px;
   padding-top: 100px;
   text-align: center;
-  text-decoration: none;
   transition: 0.5s;
 }
 .post .post-content a.more-link:hover {

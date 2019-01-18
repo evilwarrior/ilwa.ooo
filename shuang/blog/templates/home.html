@@ -19,7 +19,7 @@
 
             <div class="post-content">
                 <p>
-                    {{ post.content|safe }}
+                    {{ post.content|safe|truncatechars_html:500 }}
                 </p>
 		<a class="more-link" href="{% url 'blog_detail' id=post.id %}">Read more >>> </a>
             </div>
@@ -28,3 +28,5 @@
 </section>
 {% endblock %}
 
+{% block js %}
+{% endblock %}

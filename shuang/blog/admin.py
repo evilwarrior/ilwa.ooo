@@ -9,9 +9,21 @@ from blog.models import Criticism
 import os
 
 class ArticleAdmin(admin.ModelAdmin):
+    fields = ('title', 'authors', 'category', 'tags', 'content', 'user_now', )
     list_display = ('title', 'authors', 'pub_date')
+    readonly_fields = ['user_now', ]
+
+    def get_queryset(self, request):
+        queries = super(ArticleAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return queries
+        return queries.filter(user=request.user)
 
     def save_model(self, request, obj, form, change):
+        if request.user.is_superuser:
+            obj.user = str(obj.authors)
+        elif obj.user != request.user:
+            obj.user = str(request.user)
         if str(obj.authors) == '':
             obj.authors = str(request.user)
         if str(obj.category) == '':
