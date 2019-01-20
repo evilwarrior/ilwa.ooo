@@ -182,7 +182,8 @@ code {
   font: 18px Lora;
   color: #bbb;
 }
-.header .links {
+.header .links,
+.pagina {
   height: 40px;
   margin: 2.25em auto 4.5em;
   border-top: 1px dashed #ddd;
@@ -191,21 +192,24 @@ code {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-.header .links ul {
+.header .links ul,
+.pagina ul {
   text-decoration: none;
   padding: 0;
 }
 .header .links ul li {
   display: inline-block;
 }
-.header .links ul li::after {
+.header .links ul li::after,
+.pagina ul li::after {
   content: "\00B7";
   margin: 0 0.75em;
 }
 .header .links ul li:last-child::after {
   content: '\00A0';
 }
-.header .links ul li a {
+.header .links ul li a,
+.pagina ul li a{
   color: #777;
   text-decoration: none;
   transition: 0.3s;
@@ -260,6 +264,49 @@ code {
     background: #f78769;
     outline: 5px solid #f78769;
   }
+}
+.pagina {
+  border: 0px;
+  font: 14px Lato;
+  letter-spacing: 0px;
+  user-select: none;
+  -moz-user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
+}
+.pagina ul li {
+  display: inline-block;
+  margin: auto auto 0.75em;
+  border: none;
+}
+.pagina ul li::before {
+  margin: 0 0.75em;
+}
+.pagina ul li:first-child::before {
+  color: #f78769;
+  content: '\25C4';
+}
+.pagina ul li:last-child::after {
+  color: #f78769;
+  content: '\25BA';
+}
+.pagina ul li span {
+  padding: 4px 12px;
+}
+.pagina ul li a {
+  display: inline-block;
+  color: #f78769;
+  padding: 4px 12px;
+}
+.pagina ul li a:hover {
+  color: #ddd;
+}
+.pagina .page {
+  border: 1px dashed #ddd;
+}
+.pagina .page:hover {
+  border-color: #ffc20e;
+  background-color: #fffffb;
 }
 .post,
 .comm,
@@ -565,6 +612,10 @@ code {
 .aside-section.tag li a {
   border: 1px dashed #ddd;
   padding: 4px;
+}
+.aside-section.tag li a:hover {
+  border-color: #ffc20e;
+  background-color: #fffffb;
 }
 @media screen and (max-width: 1015px) {
   .aside {

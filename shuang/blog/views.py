@@ -1,6 +1,7 @@
 from django.shortcuts import render, render_to_response
 from django.http import Http404
 from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 # 我的模型类
@@ -10,12 +11,41 @@ from blog.forms import CriticismForm
 # python其他模块
 import os
 
+def get_pagina(post_lists, page):
+    #  主页每页显示 5 篇文章
+    pagina = Paginator(post_lists, 5)
+    try:
+        post_list = pagina.page(page)
+    except PageNotAnInteger:
+        post_list = pagina.page(1)
+    except EmptyPage:
+        post_list = pagina.page(1)
+    total = pagina.num_pages
+    current = post_list.number
+    # 截取当前页前后可用 2 页
+    width = list(range(max(current-2, 1), current))+\
+            list(range(current, min(current+2, pagina.num_pages)+1))
+    # 当前页起计算前后页(不包括当前页)过 2 页添加省略号
+    if width[0]-1 >= 2:
+        width.insert(0, '...')
+    if total-width[-1] >= 2:
+        width.append('...')
+
+    # 添加首页
+    if width[0] != 1:
+        width.insert(0, 1)
+
+    return (post_list, width)
+
 def page_not_found(request):
     return render_to_response('404.html')
 
 def home(request):
-    post_list = Article.objects.all()  # 获取全部的Article对象
-    return render(request, 'home.html', {'post_list': post_list})
+    # 获取全部的Article对象
+    post_lists = Article.objects.all()
+    page = request.GET.get('p', 1)
+    (post_list, width) = get_pagina(post_lists, page)
+    return render(request, 'home.html', {'post_list': post_list, 'page_range': width})
 
 def Detail(request, id):
     try:
@@ -54,25 +84,28 @@ def Detail(request, id):
     return render(request, 'post.html', {'post': post, 'post_crit': post_crit, 'form': form})
 
 def search_cat(request, cat): #cat(category)在URL中获取
-    try:
-    #对文章进行过滤，过滤方法是：标签不区分大小写，并且等于tag
-        post_list = Article.objects.filter(category__iexact=cat)
-    except Article.DoesNotExist:
+    #对文章进行过滤，过滤方法是：标签不区分大小写，并且等于cat
+    post_lists = Article.objects.filter(category__iexact=cat)
+    if not post_lists.exists():
         raise Http404
-    return render(request, 'home.html', {'post_list': post_list})
+    page = request.GET.get('p', 1)
+    (post_list, width) = get_pagina(post_lists, page)
+    return render(request, 'home.html', {'post_list': post_list, 'page_range': width})
 
 def search_year(request, year): #year在URL中获取
-    try:
     #对文章按年份进行归档
-        post_list = Article.objects.filter(pub_date__year=year)
-    except Article.DoesNotExist:
+    post_lists = Article.objects.filter(pub_date__year=year)
+    if not post_lists.exists():
         raise Http404
-    return render(request, 'home.html', {'post_list': post_list})
+    page = request.GET.get('p', 1)
+    (post_list, width) = get_pagina(post_lists, page)
+    return render(request, 'home.html', {'post_list': post_list, 'page_range': width})
 
 def search_tag(request, tag): #tag在URL中获取
-    try:
-    #对标签进行过滤
-        post_list = Article.objects.filter(tags__contains=tag)
-    except Article.DoesNotExist:
+    #对标签进行过滤，tags中包含tag即显示
+    post_lists = Article.objects.filter(tags__contains=tag)
+    if not post_lists.exists():
         raise Http404
-    return render(request, 'home.html', {'post_list': post_list})
+    page = request.GET.get('p', 1)
+    (post_list, width) = get_pagina(post_lists, page)
+    return render(request, 'home.html', {'post_list': post_list, 'page_range': width})

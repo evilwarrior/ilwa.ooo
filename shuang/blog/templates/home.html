@@ -25,6 +25,28 @@
             </div>
         </article>
     {% endfor %}<!-- /.blog-home -->
+
+    {% if not page_range|length_is:"1" %}
+        <nav class="pagina">
+            <ul>
+                {% if post_list.has_previous %}
+                <li><a href="?p={{ post_list.previous_page_number }}">previous</a></li>
+                {% endif %}
+
+                {% for page in page_range %}
+                    {% if page == post_list.number or page == '...' %}
+                <li><span>{{ page }}</span></li>
+                    {% else %}
+                <li><a class="page" href="?p={{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if post_list.has_next %}
+                <li><a href="?p={{ post_list.next_page_number }}">next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
 </section>
 {% endblock %}
 
