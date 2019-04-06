@@ -10,4 +10,3 @@ urlpatterns = [
     re_path(r'^$', views.home, name="blog_home"),
 ]
 
-handler404 = views.page_not_found

@@ -37,9 +37,6 @@ def get_pagina(post_lists, page):
 
     return (post_list, width)
 
-def page_not_found(request):
-    return render_to_response('404.html')
-
 def home(request):
     # 获取全部的Article对象
     post_lists = Article.objects.all()
